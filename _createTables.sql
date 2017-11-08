@@ -74,3 +74,8 @@ orderDate DATE PRIMARY KEY,
 userComment CHAR(500),
 rating INTEGER
 );
+--
+-- ADDING FOREIGN KEYS
+--
+ALTER TABLE OrderDetails
+ADD FOREIGN KEY (lineNum) references order(oID)
