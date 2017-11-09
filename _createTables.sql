@@ -12,13 +12,12 @@ DROP TABLE Review CASCADE CONSTRAINTS;
 -- Still needs: SHIPPING ADDRESS AND CREDIT CARDS ADDED
 CREATE TABLE Customer (
 cID INTEGER PRIMARY KEY,
-billingAddress varchar2(30),
-shippingAddress varchar2(30),
 lname varchar2(15),
 fname varchar2(15),
-password varchar2(15),
 email varchar2(25),
-username varchar2(15)
+username varchar2(15),
+password varchar2(15),
+billingAddress varchar2(30),
 );
 --
 -- THIS IS THE ORDER ENTITY
@@ -87,3 +86,4 @@ ADD FOREIGN KEY (orderDate) references OrderHistory(orderDate)
 --
 -- TODO POPULATE THE DATABASE WITH EXAMPLES
 --
+insert into customer values (001, 'Hull', 'Nathan', 'HullMania@mail.com', 'reincarNATE', 'IamTHEgreatest', '321 Pineapple, New York, New York')
