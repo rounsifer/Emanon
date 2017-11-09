@@ -12,13 +12,13 @@ DROP TABLE Review CASCADE CONSTRAINTS;
 -- Still needs: SHIPPING ADDRESS AND CREDIT CARDS ADDED
 CREATE TABLE Customer (
 cID INTEGER PRIMARY KEY,
-billingAddress CHAR(100),
-shippingAddress CHAR(100),
-lname CHAR(50),
-fname CHAR(50),
-password CHAR(50),
-email CHAR(50),
-username CHAR(50)
+billingAddress varchar2(30),
+shippingAddress varchar2(30),
+lname varchar2(15),
+fname varchar2(15),
+password varchar2(15),
+email varchar2(25),
+username varchar2(15)
 );
 --
 -- THIS IS THE ORDER ENTITY
@@ -32,16 +32,16 @@ totalCost DECIMAL
 --
 CREATE TABLE Category (
 categoryID INTEGER PRIMARY KEY,
-name CHAR(100),
-description char(500)
+name varchar2(30),
+description varchar2(100)
 );
 --
 -- THIS IS THE PRODUCT ENTITY
 -- NEED TO SHOW THAT CATEGORY BELONGS TO PRODUCT
 CREATE TABLE Product (
 pID INTEGER PRIMARY KEY,
-name CHAR(100),
-description char(500),
+name varchar2(30),
+description varchar2(100),
 stockQuantity INTEGER,
 price DECIMAL,
 weight DECIMAL
@@ -53,7 +53,7 @@ CREATE TABLE OrderDetails (
 -- If the order id is deleted,
 -- then delete it from the order details
 lineNum INTEGER PRIMARY KEY,
-shippingMethod CHAR(10),
+shippingMethod varchar2(15),
 shippingCost DECIMAL,
 deliverDate DATE,
 shippingDate DATE
@@ -71,7 +71,7 @@ PRIMARY KEY(orderTime, orderDate)
 --
 CREATE TABLE Review (
 orderDate DATE PRIMARY KEY,
-userComment CHAR(500),
+userComment varchar2(500),
 rating INTEGER
 );
 --
@@ -83,3 +83,7 @@ ADD FOREIGN KEY (lineNum) references UserOrder(oID)
 -- FK for the review entity's orderDate attribute
 ALTER TABLE Review
 ADD FOREIGN KEY (orderDate) references OrderHistory(orderDate)
+--
+--
+-- TODO POPULATE THE DATABASE WITH EXAMPLES
+--
