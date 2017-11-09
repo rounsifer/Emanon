@@ -50,7 +50,7 @@ weight DECIMAL
 -- THIS IS THE ORDER DETAILS ENTITY
 --
 CREATE TABLE OrderDetails (
--- If the order id is deleted, 
+-- If the order id is deleted,
 -- then delete it from the order details
 lineNum INTEGER PRIMARY KEY,
 shippingMethod CHAR(10),
@@ -77,5 +77,9 @@ rating INTEGER
 --
 -- ADDING FOREIGN KEYS
 --
+-- FK for the order detail's entity lineNum attribute
 ALTER TABLE OrderDetails
-ADD FOREIGN KEY (lineNum) references order(oID)
+ADD FOREIGN KEY (lineNum) references UserOrder(oID)
+-- FK for the review entity's orderDate attribute
+ALTER TABLE Review
+ADD FOREIGN KEY (orderDate) references OrderHistory(orderDate)
