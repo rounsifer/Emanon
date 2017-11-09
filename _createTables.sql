@@ -12,12 +12,12 @@ DROP TABLE Review CASCADE CONSTRAINTS;
 -- Still needs: SHIPPING ADDRESS AND CREDIT CARDS ADDED
 CREATE TABLE Customer (
 cID INTEGER PRIMARY KEY,
-lname varchar2(15),
-fname varchar2(15),
+lname varchar2(25),
+fname varchar2(25),
 email varchar2(25),
-username varchar2(15),
-password varchar2(15),
-billingAddress varchar2(30),
+username varchar2(25),
+password varchar2(25),
+billingAddress varchar2(100),
 );
 --
 -- THIS IS THE ORDER ENTITY
@@ -31,7 +31,7 @@ totalCost DECIMAL
 --
 CREATE TABLE Category (
 categoryID INTEGER PRIMARY KEY,
-name varchar2(30),
+name varchar2(50),
 description varchar2(100)
 );
 --
@@ -39,7 +39,7 @@ description varchar2(100)
 -- NEED TO SHOW THAT CATEGORY BELONGS TO PRODUCT
 CREATE TABLE Product (
 pID INTEGER PRIMARY KEY,
-name varchar2(30),
+name varchar2(50),
 description varchar2(100),
 stockQuantity INTEGER,
 price DECIMAL,
@@ -83,7 +83,3 @@ ADD FOREIGN KEY (lineNum) references UserOrder(oID)
 ALTER TABLE Review
 ADD FOREIGN KEY (orderDate) references OrderHistory(orderDate)
 --
---
--- TODO POPULATE THE DATABASE WITH EXAMPLES
---
-insert into customer values (001, 'Hull', 'Nathan', 'HullMania@mail.com', 'reincarNATE', 'IamTHEgreatest', '321 Pineapple, New York, New York')
