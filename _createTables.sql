@@ -293,6 +293,123 @@ insert into Review values ('11-NOV-15', 004, 009, 'I like it!', 5);
 insert into Review values ('08-SEP-16', 052, 008, 'Its okay', 3);
 --
 --
+-- Inserting UserOrders
+--
+-- uoID INTEGER PRIMARY KEY,
+-- cID INTEGER,
+-- totalCost DECIMAL,
+-- oDate DATE,
+-- oTime TIMESTAMP,
+insert into UserOrder values (001, 001, 108, '20-SEP-17');
+-- Bought: Blender, FitByte, NotHotdog(9)
+
+insert into UserOrder values (002, 002, 995, '21-SEP-17');
+-- Bought: Wilson, Apple Apple, DELL XPS 30
+
+insert into UserOrder values (003, 003, 3400, '09-JUL-17');
+-- Bought: Macbook(008), 2 Smartwatch(012), Iphone(013)
+
+insert into UserOrder values (004, 004, 1078, '13-OCT-15');
+-- Bought: Smart fridge (002), 5 Not Hotdogs(009), 3 Shin Ramen (010), 2 Apple Apple(011)
+
+insert into UserOrder values (005, 007, 10360, '07-JUN-07');
+-- Bought: 10 Smart fridges (002), 3 Google Pencils (004)
+
+insert into UserOrder values (006, 042, 249, '02-DEC-17');
+-- Bought: 3 Sharpie Pencil (003), 1 FitByte(006)
+
+insert into UserOrder values (007, 052, 4130, '07-AUG-16');
+-- Bought: Smart fridge (002), Macbook Pro (008), Apple Apple (011), Apple Watch (012), IPHONE x-x (013)
+
+insert into UserOrder values (008, 069, 2862, '01-APR-17');
+-- Bought 4 Not Hotdog (009), 3 Dell XPS 30 (007)
+--
+
+--
+-- Inserting into OrderDetails
+--
+-- lineNum INTEGER,
+-- uoID INTEGER,
+-- quantity INTEGER,
+-- shippingMethod varchar2(15),
+-- shippingCost DECIMAL,
+-- deliverDate DATE,
+-- shippingDate DATE,
+-- pID Integer
+
+-- Order 001
+insert into OrderDetails values(1, 001, 1, '2 Day', 8.75, '22-SEP-17', '23-SEP-17', 001);
+
+-- Order 001
+insert into OrderDetails values(2, 001, 1, 'Standard', 4.50, '25-SEP-17', '28-SEP-17', 006);
+
+-- Order 001
+insert into OrderDetails values(3, 001, 9, 'Overnight', 19.99, '20-SEP-17', '21-SEP-17', 009);
+
+-- Order 002
+insert into OrderDetails values(1, 002, 1, 'Standard', 4.50, '23-SEP-17', '26-SEP-17', 005);
+
+-- Order 002
+insert into OrderDetails values(2, 002, 1, 'Standard', 4.50, '23-SEP-17', '28-SEP-17', 011);
+
+-- Order 002
+insert into OrderDetails values(3, 002, 1, 'Overnight', 19.99, '21-SEP-17', '22-SEP-17', 007);
+
+-- Order 003
+insert into OrderDetails values(1, 003, 1, '2 Day', 9.99, '11-JUL-17', '14-JUL-17', 008);
+
+-- Order 003
+insert into OrderDetails values(2, 003, 2, '2 Day', 9.99, '11-JUL-17', '14-JUL-17', 012);
+
+-- Order 003
+insert into OrderDetails values(3, 003, 1, 'Overnight', 29.99, '09-JUL-17', '10-JUL-17', 013);
+
+-- Order 004
+insert into OrderDetails values(1, 004, 1, 'Standard', 9.99, '20-OCT-15', '27-OCT-15', 002);
+
+-- Order 004
+insert into OrderDetails values(2, 004, 5, '2 Day', 14.99, '15-OCT-15', '17-OCT-15', 009);
+
+-- Order 004
+insert into OrderDetails values(3, 004, 3, 'Standard', 4.50, '23-OCT-15', '26-OCT-15', 010);
+
+-- Order 004
+insert into OrderDetails values(4, 004, 2, '2 Day', 16.99, '15-OCT-15', '18-OCT-15', 011);
+
+-- Order 005 
+insert into OrderDetails values(1, 005, 10, 'Standard', 9.99, '12-JUN-07', '16-JUN-07', 002);
+
+-- Order 005
+insert into OrderDetails values(2, 005, 3, 'Overnight', 39.99, '07-JUN-07', '08-JUN-07', 004);
+
+-- Order 006
+insert into OrderDetails values(1, 006, 1, 'Overnight', 19.99, '02-DEC-17', '04-JUN-17', 003);
+
+-- Order 006
+insert into OrderDetails values(2, 006, 2, '2 Day', 10.99, '04-DEC-17', '07-DEC-17', 006);
+
+-- Order 007
+insert into OrderDetails values(1, 007, 1, 'Standard', 9.99, '12-AUG-16', '16-AUG-16', 002);
+
+-- Order 007
+insert into OrderDetails values(2, 007, 1, 'Standard', 9.99, '15-AUG-16', '19-AUG-16', 008);
+
+-- Order 007
+insert into OrderDetails values(3, 007, 1, '2 Day', 19.99, '09-AUG-16', '12-AUG-16', 011);
+
+-- Order 007
+insert into OrderDetails values(4, 007, 1, 'Overnight', 39.99, '07-AUG-16', '08-AUG-16', 012);
+
+-- Order 007
+insert into OrderDetails values(5, 007, 1, 'Standard', 4.99, '19-AUG-16', '23-AUG-16', 013);
+
+-- Order 008
+insert into OrderDetails values(1, 008, 4, 'Standard', 11.99, '07-APR-17', '11-APR-17', 009);
+
+-- Order 008
+insert into OrderDetails values(2, 008, 3, 'Standard', 7.99, '09-APR-17', '12-APR-17', 007);
+
+ 
 Select * From Customer;
 Select * From ShippingAddresses;
 Select * From CreditCards;
