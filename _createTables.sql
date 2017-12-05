@@ -56,7 +56,6 @@ uoID INTEGER PRIMARY KEY,
 cID INTEGER,
 totalCost DECIMAL,
 oDate DATE,
-oTime TIMESTAMP,
 --
 -- oIC1: Only customers place orders
 CONSTRAINT oIC1 FOREIGN KEY (cID) REFERENCES Customer(cID)
@@ -72,7 +71,7 @@ description varchar2(100)
 );
 --
 -- THIS IS THE PRODUCT ENTITY
--- NEED TO SHOW THAT CATEGORY BELONGS TO PRODUCT
+--
 CREATE TABLE Product (
 pID INTEGER PRIMARY KEY,
 pname varchar2(50),
@@ -101,41 +100,30 @@ CONSTRAINT btIC3 FOREIGN KEY (pID) REFERENCES Product(pID)
 -- THIS IS THE ORDER DETAILS ENTITY
 --
 CREATE TABLE OrderDetails (
--- If the order id is deleted,
--- then delete it from the order details
 lineNum INTEGER,
 uoID INTEGER,
 quantity INTEGER,
 shippingMethod varchar2(15),
 shippingCost DECIMAL,
-deliverDate DATE,
 shippingDate DATE,
+deliverDate DATE,
 pID Integer,
 --
--- odIC1: Next the shipping cost for next day shipping must be greater
--- than or equal to $20.
-CONSTRAINT odIC1 CHECK (NOT(shippingMethod =
-'Next Day' AND shippingCost < 20)),
--- odIC2: Order Details are unique to a particular order
-CONSTRAINT odIC2 PRIMARY KEY (uoID, lineNum),
--- odIC3: The order must exist
-CONSTRAINT odIC3 FOREIGN KEY (uoID) REFERENCES UserOrder(uoID)
+-- odIC1: The shipping cost for overnight shipping must be greater than or equal to $20
+CONSTRAINT odIC1 CHECK (NOT(shippingMethod = 'Overnight' AND shippingCost < 20)),
+-- odIC2: The shipping cost for 2 day shipping must be greater than or equal to 9
+CONSTRAINT odIC2 CHECK (NOT(shippingMethod = '2 Day' AND shippingCost < 9)),
+-- odIC3: The shipping cost for standard shipping must be greater than or equal to 5
+CONSTRAINT odIC3 CHECK (NOT(shippingMethod = 'Standard' AND shippingCost < 5)),
+-- odIC4: Order Details are unique to a particular order
+CONSTRAINT odIC4 PRIMARY KEY (uoID, lineNum),
+-- odIC5: The order must exist
+CONSTRAINT odIC5 FOREIGN KEY (uoID) REFERENCES UserOrder(uoID)
             ON DELETE CASCADE,
--- odIC4: The order details consist of a particular product
-CONSTRAINT odIC4 FOREIGN KEY (pID) REFERENCES Product(pID)
+-- odIC6: The order details consist of a particular product
+CONSTRAINT odIC6 FOREIGN KEY (pID) REFERENCES Product(pID)
             ON DELETE CASCADE
 );
---
--- THIS IS THE ORDER HISTORY WEAK ENTITY
---
--- CREATE TABLE OrderHistory (
--- cID INTEGER,
--- orderDate DATE,
--- orderTime TIMESTAMP,
---
---
--- PRIMARY KEY(orderTime, orderDate)
--- );
 --
 -- THIS IS THE REVIEW WEAK ENTITY
 --
@@ -145,15 +133,14 @@ cID INTEGER,
 pID INTEGER,
 userComment varchar2(500),
 rating INTEGER,
--- rIC1: Ratings are between and 1 and 5 inclusive
+-- revIC1: Ratings are between and 1 and 5 inclusive
 CONSTRAINT revIC1 CHECK (rating >= 1 AND rating <= 5),
--- rIC2: Customers can make multiple reviews for a product, but only on
--- different dates
+-- revIC2: Customers can make multiple reviews for a product, but only on different dates
 CONSTRAINT revIC2 PRIMARY KEY (cID, pID, revDate),
--- rIC3: A review is unique to a customer
+-- revIC3: A review is unique to a customer
 CONSTRAINT revIC3 FOREIGN KEY (cID) REFERENCES Customer(cID)
             ON DELETE CASCADE,
--- rIC4: A review is unique to a product
+-- revIC4: A review is unique to a product
 CONSTRAINT revIC4 FOREIGN KEY (pID) REFERENCES Product(pID)
             ON DELETE CASCADE
 );
@@ -232,7 +219,7 @@ insert into Product values (001, 'BlendTec Blender', 'Very strong blender', 30, 
 insert into Product values (002, 'Apple Smart Fridge', 'Modern fridge with wifi capabilities', 5, 1000.00, 100.00);
 insert into Product values (003, 'Sharpie Pen', 'Very smooth pen', 60, 3.00, 0.20);
 insert into Product values (004, 'Google Pencil', 'Smart Pencil that keeps track of everything', 20, 120.00, 0.50);
-insert into Product values (005, 'Wilson Valleyball', 'Durable volleyball and a favorite of Tom Hanks', 25, 15.00, 1.00);
+insert into Product values (005, 'Wilson Volleyball', 'Durable volleyball and a favorite of Tom Hanks', 25, 15.00, 1.00);
 insert into Product values (006, 'FitByte', 'Like a FitBit, but has more storage', 18, 100.00, 1.50);
 insert into Product values (007, 'Dell XPS 30', 'Dell Laptop. The bezels are smaller than the pixels!', 15, 950.00, 4.00);
 insert into Product values (008, 'Macbook Pro S+', 'Apples newest laptop', 8, 1800.00, 3.00);
@@ -273,8 +260,8 @@ insert into Award values ('Best Blender Award', 'Awarded to the blender', 001);
 insert into Award values ('Best Mobile Tech Award', 'Awarded to the most innovated mobile device', 006);
 insert into Award values ('Best New Food Award', 'Awarded to the best food product', 009);
 -- Test
-insert into Award values ('Best Computer Award', 'Awarded to the best laptop computer', NULL);
-insert into Award values ('Best Random Award', 'Awarded to the best ???', 009);
+-- insert into Award values ('Best Computer Award', 'Awarded to the best laptop computer', NULL);
+-- insert into Award values ('Best Random Award', 'Awarded to the best ???', 009);
 --
 -- Inserting Reviews
 --
@@ -286,9 +273,11 @@ insert into Award values ('Best Random Award', 'Awarded to the best ???', 009);
 -- rating INTEGER,
 insert into Review values ('01-OCT-17', 001, 001, 'The people of America deserve a blender this good', 5);
 insert into Review values ('02-OCT-17', 001, 001, 'Did I mention this is a good blender?', 5);
-insert into Review values ('05-OCT-17', 002, 011, 'Why is this apple so expensive?', 2);
+insert into Review values ('05-OCT-17', 001, 006, 'Great to stay in shape!', 5);
+insert into Review values ('10-OCT-17', 001, 009, 'As American as it can get!', 5);
+insert into Review values ('22-OCT-17', 002, 011, 'Why is this apple so expensive?', 2);
 insert into Review values ('20-APR-17', 069, 009, 'What is in this hotdog?', 3);
-insert into Review values ('07-JUL-07', 007, 002, 'I think it is watching me', 3);
+insert into Review values ('07-JUL-07', 007, 002, 'I think its watching me', 3);
 insert into Review values ('11-NOV-15', 004, 009, 'I like it!', 5);
 insert into Review values ('08-SEP-16', 052, 008, 'Its okay', 3);
 --
@@ -344,7 +333,7 @@ insert into OrderDetails values(1, 001, 1, '2 Day', 8.75, '22-SEP-17', '23-SEP-1
 insert into OrderDetails values(2, 001, 1, 'Standard', 4.50, '25-SEP-17', '28-SEP-17', 006);
 
 -- Order 001
-insert into OrderDetails values(3, 001, 9, 'Overnight', 29.99, '20-SEP-17', '21-SEP-17', 009);
+insert into OrderDetails values(3, 001, 1, 'Overnight', 19.99, '20-SEP-17', '21-SEP-17', 009);
 
 -- Order 002
 insert into OrderDetails values(1, 002, 1, 'Standard', 4.50, '23-SEP-17', '26-SEP-17', 005);
@@ -353,7 +342,7 @@ insert into OrderDetails values(1, 002, 1, 'Standard', 4.50, '23-SEP-17', '26-SE
 insert into OrderDetails values(2, 002, 1, 'Standard', 4.50, '23-SEP-17', '28-SEP-17', 011);
 
 -- Order 002
-insert into OrderDetails values(3, 002, 1, 'Overnight', 29.99, '21-SEP-17', '22-SEP-17', 007);
+insert into OrderDetails values(3, 002, 1, 'Overnight', 19.99, '21-SEP-17', '22-SEP-17', 007);
 
 -- Order 003
 insert into OrderDetails values(1, 003, 1, '2 Day', 9.99, '11-JUL-17', '14-JUL-17', 008);
@@ -376,14 +365,14 @@ insert into OrderDetails values(3, 004, 3, 'Standard', 4.50, '23-OCT-15', '26-OC
 -- Order 004
 insert into OrderDetails values(4, 004, 2, '2 Day', 16.99, '15-OCT-15', '18-OCT-15', 011);
 
--- Order 005 
+-- Order 005
 insert into OrderDetails values(1, 005, 10, 'Standard', 9.99, '12-JUN-07', '16-JUN-07', 002);
 
 -- Order 005
 insert into OrderDetails values(2, 005, 3, 'Overnight', 39.99, '07-JUN-07', '08-JUN-07', 004);
 
 -- Order 006
-insert into OrderDetails values(1, 006, 1, 'Overnight', 29.99, '02-DEC-17', '04-JUN-17', 003);
+insert into OrderDetails values(1, 006, 1, 'Overnight', 19.99, '02-DEC-17', '04-JUN-17', 003);
 
 -- Order 006
 insert into OrderDetails values(2, 006, 2, '2 Day', 10.99, '04-DEC-17', '07-DEC-17', 006);
@@ -409,7 +398,7 @@ insert into OrderDetails values(1, 008, 4, 'Standard', 11.99, '07-APR-17', '11-A
 -- Order 008
 insert into OrderDetails values(2, 008, 3, 'Standard', 7.99, '09-APR-17', '12-APR-17', 007);
 
- 
+
 Select * From Customer;
 Select * From ShippingAddresses;
 Select * From CreditCards;
