@@ -371,6 +371,34 @@ insert into OrderDetails values(1, 008, 4, 'Standard', 11.99, '07-APR-17', '11-A
 -- Order 008
 insert into OrderDetails values(2, 008, 3, 'Standard', 7.99, '09-APR-17', '12-APR-17', 007);
 
+------ Testing Constraints -------
+
+-- Customer --
+insert into customer values (099, 'Montana', 'Hannah', 'popstar@gmail.com', 'BestOfBothWorlds', 'Miley', '11 Palm St. Malibu, CA');
+insert into customer values (099, 'Snow', 'Jon', 'kinginthenorth@gmail.com', 'LordSnow', 'Ghost', '11 Winterfell St, Detroit, MI');
+
+-- Shipping --
+INSERT INTO OrderDetails values(3, 008, 1, 'Overnight', 4.99, '01-APR-17', '02-APR-17', 007);
+insert into OrderDetails values(4, 004, 3, 'Standard', 2.50, '23-OCT-15', '26-OCT-15', 010);
+insert into OrderDetails values(5, 004, 2, '2 Day', 1.00, '15-OCT-15', '17-OCT-15', 010);
+insert into OrderDetails values(5, 004, 2, '2 Day', 11.00, '15-OCT-15', '17-OCT-15', NULL);
+insert into OrderDetails values(1, NULL, 2, '2 Day', 11.00, '15-OCT-15', '17-OCT-15', 010);
+insert into OrderDetails values(1, 004, 2, '2 Day', 11.00, '15-OCT-15', '17-OCT-15', 010);
+insert into OrderDetails values(1, 004, 2, '2 Day', 11.00, '15-OCT-15', '17-OCT-15', 011);
+
+-- Reviews --
+insert into Review values('08-DEC-16', 007, 012, 'AMAZING', 11);
+insert into Review values('08-DEC-16', 007, 012, 'AMAZING', 5);
+insert into Review values('08-DEC-16', 007, 012, 'Not as good as it used to be', 1);
+
+-- Awards --
+insert into Award values ('Best Product Award', 'Awarded to the Apple Apple', 011);
+insert into Award values ('Best Apple Product', 'Awarded to the Apple Apple', 011);
+
+-- User Order -- 
+insert into UserOrder values (107, 052, 4130, '07-AUG-16');
+
+
 
 Select * From Customer;
 Select * From ShippingAddresses;
