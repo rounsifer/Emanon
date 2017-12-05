@@ -16,17 +16,17 @@ DROP TABLE Award CASCADE CONSTRAINTS;
 CREATE TABLE Customer (
 cID INTEGER PRIMARY KEY,
 lname varchar2(25) NOT NULL,
-fname varchar2(25),
+fname varchar2(25) NOT NULL,
 email varchar2(25) NOT NULL,
-username varchar2(25),
-password varchar2(25),
+username varchar2(25) NOT NULL,
+password varchar2(25) NOT NULL,
 billingAddress varchar2(100) NOT NULL
 );
 --
 -- Customer Shipping Addresses
 --
 Create Table ShippingAddresses (
-cID INTEGER,
+cID INTEGER NOT NULL,
 shippingAddress varchar2(100) NOT NULL,
 --
 -- shIC1: Both customers and shipping addresses are stored
@@ -39,8 +39,8 @@ CONSTRAINT shIC2 FOREIGN KEY (cID) REFERENCES Customer(cID)
 -- Customer Credit Cards
 --
 Create Table CreditCards (
-cID INTEGER,
-creditCard varchar2(100),
+cID INTEGER NOT NULL,
+creditCard varchar2(100) NOT NULL,
 --
 -- ccIC1: Both customers and credit cards are stored
 CONSTRAINT ccIC1 PRIMARY KEY (cID, creditCard),
@@ -52,9 +52,9 @@ CONSTRAINT ccIC2 FOREIGN KEY (cID) REFERENCES Customer(cID)
 -- THIS IS THE ORDER ENTITY
 --
 CREATE TABLE UserOrder (
-uoID INTEGER PRIMARY KEY,
-cID INTEGER NOT NULL,
-totalCost DECIMAL,
+uoID INTEGER PRIMARY KEY NOT NULL,
+cID INTEGER NOT NULL NOT NULL,
+totalCost DECIMAL NOT NULL,
 oDate DATE NOT NULL,
 --
 -- oIC1: Only customers place orders
@@ -65,20 +65,20 @@ CONSTRAINT oIC1 FOREIGN KEY (cID) REFERENCES Customer(cID)
 -- THIS IS THE CATEGORY ENTITY
 --
 CREATE TABLE Category (
-categoryID INTEGER PRIMARY KEY,
-cname varchar2(50),
-description varchar2(100)
+categoryID INTEGER PRIMARY KEY NOT NULL,
+cname varchar2(50) NOT NULL,
+description varchar2(100) NOT NULL
 );
 --
 -- THIS IS THE PRODUCT ENTITY
 --
 CREATE TABLE Product (
-pID INTEGER PRIMARY KEY,
-pname varchar2(50),
-description varchar2(100),
-stockQuantity INTEGER,
-price DECIMAL,
-weight DECIMAL
+pID INTEGER PRIMARY KEY NOT NULL,
+pname varchar2(50) NOT NULL,
+description varchar2(100) NOT NULL,
+stockQuantity INTEGER NOT NULL,
+price DECIMAL NOT NULL,
+weight DECIMAL NOT NULL
 );
 --
 -- Category of Products Table
@@ -102,9 +102,9 @@ CONSTRAINT btIC3 FOREIGN KEY (pID) REFERENCES Product(pID)
 CREATE TABLE OrderDetails (
 lineNum INTEGER NOT NULL,
 uoID INTEGER NOT NULL,
-quantity INTEGER,
-shippingMethod varchar2(15),
-shippingCost DECIMAL,
+quantity INTEGER NOT NULL,
+shippingMethod varchar2(15) NOT NULL,
+shippingCost DECIMAL NOT NULL,
 shippingDate DATE NOT NULL,
 deliverDate DATE NOT NULL,
 pID Integer NOT NULL,
@@ -128,10 +128,10 @@ CONSTRAINT odIC6 FOREIGN KEY (pID) REFERENCES Product(pID)
 -- THIS IS THE REVIEW WEAK ENTITY
 --
 CREATE TABLE Review (
-revDate DATE,
+revDate DATE NOT NULL,
 cID INTEGER NOT NULL,
 pID INTEGER NOT NULL,
-userComment varchar2(500),
+userComment varchar2(500) NOT NULL,
 rating INTEGER NOT NULL,
 -- revIC1: Ratings are between and 1 and 5 inclusive
 CONSTRAINT revIC1 CHECK (rating >= 1 AND rating <= 5),
@@ -148,9 +148,9 @@ CONSTRAINT revIC4 FOREIGN KEY (pID) REFERENCES Product(pID)
 -- Awards for Products Table
 --
 CREATE TABLE Award (
-name varchar2(30) PRIMARY KEY,
-description varchar2(100),
-pID INTEGER NOT NULL,
+name varchar2(30) PRIMARY KEY NOT NULL,
+description varchar2(100) NOT NULL,
+pID INTEGER,
 --
 -- awIC1: An award can be assigned to a product that exists
 CONSTRAINT awIC1 FOREIGN KEY (pID) REFERENCES Product(pID)
