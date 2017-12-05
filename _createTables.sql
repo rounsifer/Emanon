@@ -376,31 +376,54 @@ insert into OrderDetails values(2, 008, 3, 'Standard', 7.99, '09-APR-17', '12-AP
 ------ Testing Constraints -------
 
 -- Customer --
+-- cIC1 constraint testing
 insert into customer values (099, 'Montana', 'Hannah', 'popstar@gmail.com', 'BestOfBothWorlds', 'Miley', '11 Palm St. Malibu, CA');
 insert into customer values (099, 'Snow', 'Jon', 'kinginthenorth@gmail.com', 'LordSnow', 'Ghost', '11 Winterfell St, Detroit, MI');
 
--- Shipping --
+-- Shipping Address --
+-- shIC2 constraint test
+insert into ShippingAddresses(001, '321 Golang, Beverly Hills, California')
+
+-- Order Details --
+-- odIC1 constraint test
 INSERT INTO OrderDetails values(3, 008, 1, 'Overnight', 4.99, '01-APR-17', '02-APR-17', 007);
+-- odIC3 constraint test
 insert into OrderDetails values(4, 004, 3, 'Standard', 2.50, '23-OCT-15', '26-OCT-15', 010);
+-- odIC2 constraint test
 insert into OrderDetails values(5, 004, 2, '2 Day', 1.00, '15-OCT-15', '17-OCT-15', 010);
+-- odIC6 constraint testing with NULL
 insert into OrderDetails values(5, 004, 2, '2 Day', 11.00, '15-OCT-15', '17-OCT-15', NULL);
+-- odIC5 constraint testing with different NULL
 insert into OrderDetails values(1, NULL, 2, '2 Day', 11.00, '15-OCT-15', '17-OCT-15', 010);
-insert into OrderDetails values(1, 004, 2, '2 Day', 11.00, '15-OCT-15', '17-OCT-15', 010);
+-- odIC4 constraint test
+insert into OrderDetails values(1, 004, 2, '2 Day', 11.00, '15-OCT-15', '17-OCT-15', 010); 
 insert into OrderDetails values(1, 004, 2, '2 Day', 11.00, '15-OCT-15', '17-OCT-15', 011);
 
 -- Reviews --
+-- revIC1 constraint test
 insert into Review values('08-DEC-16', 007, 012, 'AMAZING', 11);
+insert into Review values('08-DEC-16', 001, 'This is a great product', 11)
+-- revIC2 constraint test
 insert into Review values('08-DEC-16', 007, 012, 'AMAZING', 5);
 insert into Review values('08-DEC-16', 007, 012, 'Not as good as it used to be', 1);
 
 -- Awards --
+-- awIC1 and awIC2 constraint test
 insert into Award values ('Best Product Award', 'Awarded to the Apple Apple', 011);
 insert into Award values ('Best Apple Product', 'Awarded to the Apple Apple', 011);
 
 -- User Order -- 
 insert into UserOrder values (107, 052, 4130, '07-AUG-16');
 
+-- Belongs To --
+-- btIC2 constraint test
+insert into BelongsTo(001, 002)
+-- btIC3 constraint test
+insert into BelongsTo(002, 002)
 
+-- Credit Cards --
+-- ccIC2 constraint test
+insert into CreditCards(001, 1234567891234567)
 
 Select * From Customer;
 Select * From ShippingAddresses;
