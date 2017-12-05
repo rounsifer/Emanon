@@ -15,19 +15,19 @@ DROP TABLE Award CASCADE CONSTRAINTS;
 --
 CREATE TABLE Customer (
 cID INTEGER PRIMARY KEY,
-lname varchar2(25),
+lname varchar2(25) NOT NULL,
 fname varchar2(25),
-email varchar2(25),
+email varchar2(25) NOT NULL,
 username varchar2(25),
 password varchar2(25),
-billingAddress varchar2(100)
+billingAddress varchar2(100) NOT NULL
 );
 --
 -- Customer Shipping Addresses
 --
 Create Table ShippingAddresses (
 cID INTEGER,
-shippingAddress varchar2(100),
+shippingAddress varchar2(100) NOT NULL,
 --
 -- shIC1: Both customers and shipping addresses are stored
 CONSTRAINT shIC1 PRIMARY KEY (cID, shippingAddress),
@@ -53,9 +53,9 @@ CONSTRAINT ccIC2 FOREIGN KEY (cID) REFERENCES Customer(cID)
 --
 CREATE TABLE UserOrder (
 uoID INTEGER PRIMARY KEY,
-cID INTEGER,
+cID INTEGER NOT NULL,
 totalCost DECIMAL,
-oDate DATE,
+oDate DATE NOT NULL,
 --
 -- oIC1: Only customers place orders
 CONSTRAINT oIC1 FOREIGN KEY (cID) REFERENCES Customer(cID)
@@ -84,8 +84,8 @@ weight DECIMAL
 -- Category of Products Table
 --
 CREATE TABLE BelongsTo (
-pID INTEGER,
-CategoryID INTEGER,
+pID INTEGER NOT NULL,
+CategoryID INTEGER NOT NULL,
 --
 -- btIC1: The product and its category are stored
 CONSTRAINT btIC1 PRIMARY KEY (pID, CategoryID),
@@ -100,14 +100,14 @@ CONSTRAINT btIC3 FOREIGN KEY (pID) REFERENCES Product(pID)
 -- THIS IS THE ORDER DETAILS ENTITY
 --
 CREATE TABLE OrderDetails (
-lineNum INTEGER,
-uoID INTEGER,
+lineNum INTEGER NOT NULL,
+uoID INTEGER NOT NULL,
 quantity INTEGER,
 shippingMethod varchar2(15),
 shippingCost DECIMAL,
-shippingDate DATE,
-deliverDate DATE,
-pID Integer,
+shippingDate DATE NOT NULL,
+deliverDate DATE NOT NULL,
+pID Integer NOT NULL,
 --
 -- odIC1: The shipping cost for overnight shipping must be greater than or equal to $20
 CONSTRAINT odIC1 CHECK (NOT(shippingMethod = 'Overnight' AND shippingCost < 20)),
@@ -129,10 +129,10 @@ CONSTRAINT odIC6 FOREIGN KEY (pID) REFERENCES Product(pID)
 --
 CREATE TABLE Review (
 revDate DATE,
-cID INTEGER,
-pID INTEGER,
+cID INTEGER NOT NULL,
+pID INTEGER NOT NULL,
 userComment varchar2(500),
-rating INTEGER,
+rating INTEGER NOT NULL,
 -- revIC1: Ratings are between and 1 and 5 inclusive
 CONSTRAINT revIC1 CHECK (rating >= 1 AND rating <= 5),
 -- revIC2: Customers can make multiple reviews for a product, but only on different dates
@@ -150,7 +150,7 @@ CONSTRAINT revIC4 FOREIGN KEY (pID) REFERENCES Product(pID)
 CREATE TABLE Award (
 name varchar2(30) PRIMARY KEY,
 description varchar2(100),
-pID INTEGER,
+pID INTEGER NOT NULL,
 --
 -- awIC1: An award can be assigned to a product that exists
 CONSTRAINT awIC1 FOREIGN KEY (pID) REFERENCES Product(pID)
