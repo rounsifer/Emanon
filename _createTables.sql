@@ -56,6 +56,7 @@ uoID INTEGER PRIMARY KEY,
 cID INTEGER,
 totalCost DECIMAL,
 oDate DATE,
+oTime TIMESTAMP,
 --
 -- oIC1: Only customers place orders
 CONSTRAINT oIC1 FOREIGN KEY (cID) REFERENCES Customer(cID)
@@ -107,8 +108,8 @@ uoID INTEGER,
 quantity INTEGER,
 shippingMethod varchar2(15),
 shippingCost DECIMAL,
-shippingDate DATE,
 deliverDate DATE,
+shippingDate DATE,
 pID Integer,
 --
 -- odIC1: Next the shipping cost for next day shipping must be greater
@@ -231,7 +232,7 @@ insert into Product values (001, 'BlendTec Blender', 'Very strong blender', 30, 
 insert into Product values (002, 'Apple Smart Fridge', 'Modern fridge with wifi capabilities', 5, 1000.00, 100.00);
 insert into Product values (003, 'Sharpie Pen', 'Very smooth pen', 60, 3.00, 0.20);
 insert into Product values (004, 'Google Pencil', 'Smart Pencil that keeps track of everything', 20, 120.00, 0.50);
-insert into Product values (005, 'Wilson Volleyball', 'Durable volleyball and a favorite of Tom Hanks', 25, 15.00, 1.00);
+insert into Product values (005, 'Wilson Valleyball', 'Durable volleyball and a favorite of Tom Hanks', 25, 15.00, 1.00);
 insert into Product values (006, 'FitByte', 'Like a FitBit, but has more storage', 18, 100.00, 1.50);
 insert into Product values (007, 'Dell XPS 30', 'Dell Laptop. The bezels are smaller than the pixels!', 15, 950.00, 4.00);
 insert into Product values (008, 'Macbook Pro S+', 'Apples newest laptop', 8, 1800.00, 3.00);
@@ -272,8 +273,8 @@ insert into Award values ('Best Blender Award', 'Awarded to the blender', 001);
 insert into Award values ('Best Mobile Tech Award', 'Awarded to the most innovated mobile device', 006);
 insert into Award values ('Best New Food Award', 'Awarded to the best food product', 009);
 -- Test
--- insert into Award values ('Best Computer Award', 'Awarded to the best laptop computer', NULL);
--- insert into Award values ('Best Random Award', 'Awarded to the best ???', 009);
+insert into Award values ('Best Computer Award', 'Awarded to the best laptop computer', NULL);
+insert into Award values ('Best Random Award', 'Awarded to the best ???', 009);
 --
 -- Inserting Reviews
 --
@@ -285,11 +286,9 @@ insert into Award values ('Best New Food Award', 'Awarded to the best food produ
 -- rating INTEGER,
 insert into Review values ('01-OCT-17', 001, 001, 'The people of America deserve a blender this good', 5);
 insert into Review values ('02-OCT-17', 001, 001, 'Did I mention this is a good blender?', 5);
-insert into Review values ('05-OCT-17', 001, 006, 'Great to stay in shape!', 5);
-insert into Review values ('10-OCT-17', 001, 009, 'As American as it can get!', 5);
-insert into Review values ('22-OCT-17', 002, 011, 'Why is this apple so expensive?', 2);
+insert into Review values ('05-OCT-17', 002, 011, 'Why is this apple so expensive?', 2);
 insert into Review values ('20-APR-17', 069, 009, 'What is in this hotdog?', 3);
-insert into Review values ('07-JUL-07', 007, 002, 'I think its watching me', 3);
+insert into Review values ('07-JUL-07', 007, 002, 'I think it is watching me', 3);
 insert into Review values ('11-NOV-15', 004, 009, 'I like it!', 5);
 insert into Review values ('08-SEP-16', 052, 008, 'Its okay', 3);
 --
@@ -345,7 +344,7 @@ insert into OrderDetails values(1, 001, 1, '2 Day', 8.75, '22-SEP-17', '23-SEP-1
 insert into OrderDetails values(2, 001, 1, 'Standard', 4.50, '25-SEP-17', '28-SEP-17', 006);
 
 -- Order 001
-insert into OrderDetails values(3, 001, 1, 'Overnight', 19.99, '20-SEP-17', '21-SEP-17', 009);
+insert into OrderDetails values(3, 001, 9, 'Overnight', 29.99, '20-SEP-17', '21-SEP-17', 009);
 
 -- Order 002
 insert into OrderDetails values(1, 002, 1, 'Standard', 4.50, '23-SEP-17', '26-SEP-17', 005);
@@ -354,7 +353,7 @@ insert into OrderDetails values(1, 002, 1, 'Standard', 4.50, '23-SEP-17', '26-SE
 insert into OrderDetails values(2, 002, 1, 'Standard', 4.50, '23-SEP-17', '28-SEP-17', 011);
 
 -- Order 002
-insert into OrderDetails values(3, 002, 1, 'Overnight', 19.99, '21-SEP-17', '22-SEP-17', 007);
+insert into OrderDetails values(3, 002, 1, 'Overnight', 29.99, '21-SEP-17', '22-SEP-17', 007);
 
 -- Order 003
 insert into OrderDetails values(1, 003, 1, '2 Day', 9.99, '11-JUL-17', '14-JUL-17', 008);
@@ -377,14 +376,14 @@ insert into OrderDetails values(3, 004, 3, 'Standard', 4.50, '23-OCT-15', '26-OC
 -- Order 004
 insert into OrderDetails values(4, 004, 2, '2 Day', 16.99, '15-OCT-15', '18-OCT-15', 011);
 
--- Order 005
+-- Order 005 
 insert into OrderDetails values(1, 005, 10, 'Standard', 9.99, '12-JUN-07', '16-JUN-07', 002);
 
 -- Order 005
 insert into OrderDetails values(2, 005, 3, 'Overnight', 39.99, '07-JUN-07', '08-JUN-07', 004);
 
 -- Order 006
-insert into OrderDetails values(1, 006, 1, 'Overnight', 19.99, '02-DEC-17', '04-JUN-17', 003);
+insert into OrderDetails values(1, 006, 1, 'Overnight', 29.99, '02-DEC-17', '04-JUN-17', 003);
 
 -- Order 006
 insert into OrderDetails values(2, 006, 2, '2 Day', 10.99, '04-DEC-17', '07-DEC-17', 006);
@@ -410,7 +409,7 @@ insert into OrderDetails values(1, 008, 4, 'Standard', 11.99, '07-APR-17', '11-A
 -- Order 008
 insert into OrderDetails values(2, 008, 3, 'Standard', 7.99, '09-APR-17', '12-APR-17', 007);
 
-
+ 
 Select * From Customer;
 Select * From ShippingAddresses;
 Select * From CreditCards;
