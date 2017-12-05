@@ -14,13 +14,16 @@ DROP TABLE Award CASCADE CONSTRAINTS;
 -- THIS IS THE CUSTOMER ENTITY
 --
 CREATE TABLE Customer (
-cID INTEGER PRIMARY KEY,
+cID INTEGER,
 lname varchar2(25) NOT NULL,
 fname varchar2(25) NOT NULL,
 email varchar2(25) NOT NULL,
 username varchar2(25) NOT NULL,
 password varchar2(25) NOT NULL,
-billingAddress varchar2(100) NOT NULL
+billingAddress varchar2(100) NOT NULL,
+--
+-- Unique ID for each customer
+CONSTRAINT cIC1 PRIMARY KEY (cID)
 );
 --
 -- Customer Shipping Addresses
@@ -161,8 +164,6 @@ CONSTRAINT awIC2 UNIQUE (pID)
 --
 --
 --
--- TODO POPULATE THE DATABASE WITH EXAMPLES
---
 insert into customer values (001, 'Obama', 'Barack', 'Obobo@whitehouse.com', 'CaptainAmerica', 'ComeAtMeBro-_-', '1 President Court, Washington, D.C.');
 insert into customer values (002, 'Biden', 'Joe', 'harvard_man@joebiden.com', 'Bucky', 'WeWillWin', '635 W 42nd St, New York, NY');
 insert into customer values (003, 'Hull', 'Nathan', 'HullMania@mail.com', 'reincarNATE', 'IamTHEgreatest', '321 Pineapple, New York, New York');
@@ -249,11 +250,6 @@ insert into BelongsTo values (011, 005);
 insert into BelongsTo values (012, 006);
 insert into BelongsTo values (013, 006);
 --
--- Query to find the names
--- Select P.name, C.name
--- From Product P, Category C, BelongsTo B
--- Where B.pid = P.pid AND C.categoryID = B.categoryID;
---
 -- Inserting Awards
 --
 insert into Award values ('Best Blender Award', 'Awarded to the blender', 001);
@@ -265,12 +261,6 @@ insert into Award values ('Best New Food Award', 'Awarded to the best food produ
 --
 -- Inserting Reviews
 --
--- Review
--- revDate DATE,
--- cID INTEGER,
--- pID INTEGER,
--- userComment varchar2(500),
--- rating INTEGER,
 insert into Review values ('01-OCT-17', 001, 001, 'The people of America deserve a blender this good', 5);
 insert into Review values ('02-OCT-17', 001, 001, 'Did I mention this is a good blender?', 5);
 insert into Review values ('05-OCT-17', 001, 006, 'Great to stay in shape!', 5);
@@ -281,14 +271,8 @@ insert into Review values ('07-JUL-07', 007, 002, 'I think its watching me', 3);
 insert into Review values ('11-NOV-15', 004, 009, 'I like it!', 5);
 insert into Review values ('08-SEP-16', 052, 008, 'Its okay', 3);
 --
---
 -- Inserting UserOrders
 --
--- uoID INTEGER PRIMARY KEY,
--- cID INTEGER,
--- totalCost DECIMAL,
--- oDate DATE,
--- oTime TIMESTAMP,
 insert into UserOrder values (001, 001, 108, '20-SEP-17');
 -- Bought: Blender, FitByte, NotHotdog(9)
 
@@ -313,19 +297,8 @@ insert into UserOrder values (007, 052, 4130, '07-AUG-16');
 insert into UserOrder values (008, 069, 2862, '01-APR-17');
 -- Bought 4 Not Hotdog (009), 3 Dell XPS 30 (007)
 --
-
---
 -- Inserting into OrderDetails
 --
--- lineNum INTEGER,
--- uoID INTEGER,
--- quantity INTEGER,
--- shippingMethod varchar2(15),
--- shippingCost DECIMAL,
--- deliverDate DATE,
--- shippingDate DATE,
--- pID Integer
-
 -- Order 001
 insert into OrderDetails values(1, 001, 1, '2 Day', 9.75, '22-SEP-17', '23-SEP-17', 001);
 
