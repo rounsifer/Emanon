@@ -1,3 +1,5 @@
+-- By Ronald Rounsifer, Alan Sisouphone, Kaylin Zaroukian, Sean Aubrey --
+
 -- DELETE ALL OF THE TABLES IN CASE THEY WERE PREVIOUSLY CREATED
 --
 DROP TABLE Customer CASCADE CONSTRAINTS;
